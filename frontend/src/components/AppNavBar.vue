@@ -3,7 +3,7 @@
     <v-app-bar-title ><p class="titulo">{{ title }}</p></v-app-bar-title>
     <template #append>
       <v-btn icon="mdi-plus" v-if="admin" @click="dialog = true"></v-btn>
-      <v-btn icon="mdi-home" :to="{ name: 'base-home' }"></v-btn>
+      <v-btn icon="mdi-home" :to="{ name: 'tasks-list' }"></v-btn>
        <v-btn @click="goShopping()" icon v-bind:title="' items in cart'" class="cart-button">
     <v-icon>mdi-cart</v-icon>
   </v-btn>

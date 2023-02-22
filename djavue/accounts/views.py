@@ -6,7 +6,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.http import HttpResponse
-from ..tasks.service import log_svc
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
@@ -38,7 +37,6 @@ def login(request):
     if user is not None:
         if user.is_active:
             auth.login(request, user)
-            log_svc.log_login(request.user)
             user_dict = _user2dict(user)
     return JsonResponse(user_dict, safe=False)
 
@@ -46,8 +44,6 @@ def login(request):
 def logout(request):
     if request.method.lower() != "post":
         raise Exception("Logout only via post")
-    if request.user.is_authenticated:
-        log_svc.log_logout(request.user)
     auth.logout(request)
     return JsonResponse({})
 
