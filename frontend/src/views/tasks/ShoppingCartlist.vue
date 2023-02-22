@@ -12,7 +12,9 @@
             <span class="font-weight-bold">{{ product[0][0].price }}</span>
           </v-card-title>
           <v-card-text  class="d-flex justify-center">{{ product[0][0].description }}</v-card-text>
+          <v-card-actions class="d-flex justify-center">
         <v-icon size="32" @click="deleteOfCart(product[1])" class="lixeira">mdi-delete</v-icon>
+        </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -199,9 +201,6 @@ export default {
 
 .form{
 margin-bottom: 20px;
-}
-.botao{
-
 }
 
 </style>
