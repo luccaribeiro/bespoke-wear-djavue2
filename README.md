@@ -29,6 +29,11 @@ Password:
 Password (again):
 Superuser created successfully.
 ```
+## Alimentar o Banco com produtos para teste
+```
+docker-compose exec backend python manage.py loaddata products.json
+```
+
 ## Previa 
 ![image](https://user-images.githubusercontent.com/104439599/218184021-ca7648a1-7cae-4f85-9995-47e0c5b0fce6.png)
 ![image](https://user-images.githubusercontent.com/104439599/218184301-c7c03c84-36c4-489d-a8bf-0259f22d684f.png)
