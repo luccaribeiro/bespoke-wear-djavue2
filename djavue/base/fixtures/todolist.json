@@ -1,0 +1,32 @@
+[
+  {
+    "model": "base.product",
+    "pk": 1,
+    "fields": {
+      "name": "Calça Preta",
+      "description": "Calça preta simples sem detalhes.",
+      "price": 49.99,
+      "image": "https://cdn.awsli.com.br/600x450/2111/2111611/produto/163266408/5790e6945e.jpg"
+    }
+  },
+  {
+    "model": "base.product",
+    "pk": 2,
+    "fields": {
+      "name": "Tenis Branco",
+      "description": "Tenis Branco, combina com tudo.",
+      "price": 99.99,
+      "image": "https://imgnike-a.akamaihd.net/768x768/01113751.jpg"
+    }
+  },
+  {
+    "model": "base.product",
+    "pk": 3,
+    "fields": {
+      "name": "Camisa Rosa",
+      "description": "Camisa rosa simples sem detalhes.",
+      "price": 39.99,
+      "image": "https://cf.shopee.com.br/file/5ee93e0b41b04b867846fc6f61b811b2"
+    }
+  }
+]

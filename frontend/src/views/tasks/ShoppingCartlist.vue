@@ -3,16 +3,16 @@
     <h1>Carrinho de compras</h1>
     <br>
     <v-row>
-      <v-col cols="12" sm="6" md="4" v-for="(product, index) in products" :key="product.id">
+      <v-col cols="12" sm="6" md="4" v-for="product in products" :key="product.id">
         <v-card>
-          <v-img class="image" :src="product[0].image" height="250px"></v-img>
+          <v-img class="image" :src="product[0][0].image" height="250px"></v-img>
           <v-card-title class="text-center">
-            {{ product[0].name }}
+            {{ product[0][0].name }}
             <br />
-            <span class="font-weight-bold">{{ product[0].price }}</span>
+            <span class="font-weight-bold">{{ product[0][0].price }}</span>
           </v-card-title>
-          <v-card-text>{{ product[0].description }}</v-card-text>
-        <v-icon size="32" @click="deleteOfCart(carrinho_id[index])" class="lixeira">mdi-delete</v-icon>
+          <v-card-text  class="d-flex justify-center">{{ product[0][0].description }}</v-card-text>
+        <v-icon size="32" @click="deleteOfCart(product[1])" class="lixeira">mdi-delete</v-icon>
         </v-card>
       </v-col>
     </v-row>
@@ -104,7 +104,6 @@ export default {
       products: [],
       products_id: [],
       total: 0,
-      carrinho_id: [],
       dialog: false,
     }
   },
@@ -126,18 +125,18 @@ export default {
             texto = JSON.parse(texto)
             this.dicionario = texto["shoppingCart"]
             for(let item of this.dicionario){
-                this.products_id.push(item['product_id'])
-                this.carrinho_id.push(item['id'])
+                this.products_id.push([item['product_id'], item['id']])
             }
             for(let id of this.products_id){
                 var requestOptions = {method: 'GET',redirect: 'follow'};
-                fetch(`http://localhost/api/produtos/shoppingcart/${id}`, requestOptions)
+                fetch(`http://localhost/api/produtos/shoppingcart/${id[0]}`, requestOptions)
                   .then(response => response.text())
                   .then(result => {
                     let texto = result
                     texto = JSON.parse(texto)
-                    this.products.push(texto['product'])
-                    this.total += Number(texto['product'][0]['price'])
+                    texto = texto['product']
+                    this.products.push([texto, id[1]])
+                    this.total += Number(texto[0]['price'])
                   })
                   .catch(error => console.log('error', error));
                             }
