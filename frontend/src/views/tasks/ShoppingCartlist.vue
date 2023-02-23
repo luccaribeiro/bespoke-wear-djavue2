@@ -44,12 +44,11 @@
             prepend-inner-icon="mdi-format-align-justify"
             variant="outlined"
             ></v-text-field>
-                        <v-text-field
-            v-model=price
+             <v-text-field
+            type=number
             label="Número cartão de credito"
             prepend-inner-icon="mdi-currency-usd"
             variant="outlined"
-            type="number"
             ></v-text-field>
             <v-text-field
             type=date
@@ -71,7 +70,7 @@
             rounded="pill"
             color="primary"
             append-icon="mdi-chevron-right"
-            @click="dialog = false"
+            @click="buyCart()"
             >
             Finalizar compra
           </v-btn>
@@ -153,7 +152,7 @@ export default {
             method: 'DELETE',
             redirect: 'follow'
           };
-          
+  
           fetch(`http://localhost/api/produtos/removecart/${id}`, requestOptions)
             .then(response => response.text())
             .then(result => {
@@ -165,6 +164,19 @@ export default {
               this.appStore.showSnackbar("ERRO!! ")
             });
         },
+      async buyCart(){
+         var requestOptions = {
+            method: 'DELETE',
+            redirect: 'follow'
+          };
+          
+        for(let item of this.dicionario){
+          await fetch(`http://localhost/api/produtos/removecart/${item.id}`, requestOptions)
+        }
+         this.dialog = false
+        await this.getShoppingList()
+        await this.appStore.showSnackbar("Compra Concluida ")
+      },
   },
   
   created(){
