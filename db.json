@@ -1,0 +1,93 @@
+{
+  "produtos": [
+    {
+      "id": 1,
+      "nome": "Calça Preta",
+      "description": "Calça preta simples sem detalhes.",
+      "price": 49.99,
+      "image": "https://cdn.awsli.com.br/600x450/2111/2111611/produto/163266408/5790e6945e.jpg"
+    },
+    {
+      "id": 2,
+      "nome": "Tênis Branco",
+      "description": "Tênis Branco, combina com tudo.",
+      "price": 99.99,
+      "image": "https://imgnike-a.akamaihd.net/768x768/01113751.jpg"
+    },
+    {
+      "id": 3,
+      "nome": "Camisa Rosa",
+      "description": "Camisa rosa simples sem detalhes.",
+      "price": 39.99,
+      "image": "https://cf.shopee.com.br/file/5ee93e0b41b04b867846fc6f61b811b2"
+    }
+  ],
+  "shoppingcart": [
+    {
+      "id": 126,
+      "product_id": 1,
+      "user_id": 1
+    },
+    {
+      "id": 127,
+      "product_id": 3,
+      "user_id": 1
+    },
+    {
+      "id": 128,
+      "product_id": 3,
+      "user_id": 1
+    },
+    {
+      "id": 131,
+      "product_id": 3,
+      "user_id": 2
+    },
+    {
+      "id": 139,
+      "product_id": 3,
+      "user_id": 2
+    },
+    {
+      "id": 140,
+      "product_id": 1,
+      "user_id": 2
+    },
+    {
+      "id": 142,
+      "product_id": 3,
+      "user_id": 2
+    },
+    {
+      "id": 143,
+      "product_id": 2,
+      "user_id": 2
+    }
+  ],
+  "cupons": [
+    {
+      "name": "PUDIM",
+      "kind_of_discount": "PC",
+      "discount_value": 20,
+      "id": 1
+    },
+    {
+      "name": "IHAA",
+      "kind_of_discount": "AB",
+      "discount_value": 50,
+      "id": 2
+    },
+    {
+      "name": "TSURU",
+      "kind_of_discount": "AB",
+      "discount_value": 160,
+      "id": 3
+    },
+    {
+      "name": "CULTURA-ENERGIAPOSITIVA",
+      "kind_of_discount": "AB",
+      "discount_value": 100,
+      "id": 4
+    }
+  ]
+}
