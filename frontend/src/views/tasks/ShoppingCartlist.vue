@@ -93,11 +93,12 @@
 
 <script>
 import { useAppStore } from "@/stores/appStore"
-
+import { shoppingCartStore } from '@/stores/cartStore'
 export default {
       setup() {
     const appStore = useAppStore()
-    return { appStore}
+    const cartStore = shoppingCartStore()
+    return { appStore, cartStore}
   },
   data () {
     return {
@@ -163,6 +164,7 @@ export default {
               console.log('error', error)
               this.appStore.showSnackbar("ERRO!! ")
             });
+            this.cartStore.itemsQuantity--
         },
       async buyCart(){
          var requestOptions = {
@@ -176,11 +178,13 @@ export default {
          this.dialog = false
         await this.getShoppingList()
         await this.appStore.showSnackbar("Compra Concluida ")
+        this.cartStore.getItemsQuantity()
       },
   },
   
   created(){
     this.main()
+    this.cartStore.getItemsQuantity()
   }
   }
 </script>

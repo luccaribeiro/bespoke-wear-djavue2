@@ -4,8 +4,12 @@
     <template #append>
       <v-btn icon="mdi-plus" v-if="admin" @click="dialog = true"></v-btn>
       <v-btn icon="mdi-home" :to="{ name: 'tasks-list' }"></v-btn>
-       <v-btn @click="goShopping()" icon v-bind:title="' items in cart'" class="cart-button">
-    <v-icon>mdi-cart</v-icon>
+      <v-btn @click="goShopping()" icon v-bind:title="' items in cart'" class="cart-button">
+      <v-badge :content=store.itemsQuantity color="error">
+        <v-btn @click="goShopping()" icon v-bind:title="' items in cart'" class="cart-button">
+          <v-icon>mdi-cart</v-icon>
+        </v-btn>
+      </v-badge>
   </v-btn>
       <v-btn
         :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
@@ -86,7 +90,12 @@
 </template>
 
 <script>
+import { shoppingCartStore } from '../stores/cartStore'
 export default {
+  setup() {
+    const store = shoppingCartStore()
+    return {store}
+  },
   props: {
     title: {
       type: String,

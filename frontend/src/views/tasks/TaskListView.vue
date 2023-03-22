@@ -89,11 +89,12 @@
 <script>
 import axios from 'axios';
 import { useAppStore } from "@/stores/appStore"
-
+import { shoppingCartStore } from '@/stores/cartStore'
 export default {
     setup() {
     const appStore = useAppStore()
-    return { appStore}
+    const cartStore = shoppingCartStore()
+    return { appStore, cartStore}
   },
   data () {
     return {
@@ -152,6 +153,7 @@ export default {
           this.appStore.showSnackbar("ERRO")
           console.log('error', error)
         });
+        this.cartStore.itemsQuantity++
           },
       deleteOfProduct(product_id){
         var requestOptions = {
@@ -204,6 +206,7 @@ export default {
   created() {
     this.fetchProducts();
     this.infosUsuarios();
+    this.cartStore.getItemsQuantity()
   },
 }
 </script>
