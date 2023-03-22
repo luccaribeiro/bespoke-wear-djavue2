@@ -39,3 +39,25 @@ class ShoppingCart(models.Model):
 
 #     def __str__(self):
 #         return self.name
+
+class Coupon(models.Model):
+    PERCENTAGE = 'PC'
+    ABSOLUTE = 'AB'
+    DISCOUNT_TYPES = [
+        (PERCENTAGE, 'Percentage'),
+        (ABSOLUTE, 'Absolute'),
+    ]
+    name = models.CharField(max_length=100)
+    kind_of_discount = models.CharField(max_length=2, choices=DISCOUNT_TYPES, default=ABSOLUTE)
+    discount_value = models.IntegerField(default=0, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+    
+    def to_dict_json(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'kind_of_discount': self.kind_of_discount,
+            'discount_value': self.discount_value,
+        }

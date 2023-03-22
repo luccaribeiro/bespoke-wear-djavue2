@@ -26,4 +26,28 @@ export default {
         })
     })
   },
+  addNewCoupon: (coupon_name, type, price) => {
+    return new Promise((resolve, reject) => {
+      api
+        .post("/api/coupons/create", apiHelpers.dataToForm({ coupon_name, type, price }))
+        .then((response) => {
+          return resolve(response.data)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  },
+  applyCoupon: (coupon_name) => {
+    return new Promise((resolve, reject) => {
+      api
+        .post("api/coupons/apply", apiHelpers.dataToForm({ coupon_name }))
+        .then((response) => {
+          return resolve(response.data)
+        })
+        .catch ((error) => {
+          return reject(error)
+        })
+    })
+  },
 }

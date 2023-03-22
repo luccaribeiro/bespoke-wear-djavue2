@@ -2,6 +2,7 @@
   <v-app-bar>
     <v-app-bar-title ><p class="titulo">{{ title }}</p></v-app-bar-title>
     <template #append>
+      <v-btn icon="mdi-ticket-percent" v-if="admin" @click="couponDialog = true"></v-btn>
       <v-btn icon="mdi-plus" v-if="admin" @click="dialog = true"></v-btn>
       <v-btn icon="mdi-home" :to="{ name: 'tasks-list' }"></v-btn>
       <v-btn @click="goShopping()" icon v-bind:title="' items in cart'" class="cart-button">
@@ -29,7 +30,6 @@
       v-model="dialog"
       width="800"
     >
-
       <v-card>
         <v-row align="center" class="mt-10" no-gutters>
       <v-col cols="12" sm="6" offset-sm="3">
@@ -85,12 +85,64 @@
     </v-row>
       </v-card>
     </v-dialog>
+    <v-dialog
+      v-model="couponDialog"
+      width="800"
+    >
+
+      <v-card>
+        <v-row align="center" class="mt-10" no-gutters>
+      <v-col cols="12" sm="6" offset-sm="3">
+        <v-sheet class="pa-2"> <h1>Novo Cupom</h1> </v-sheet>
+        <v-form class="form">
+          <v-text-field
+            v-model=couponName
+            label="Nome do Cupom"
+            prepend-inner-icon="mdi-text"
+            variant="outlined"
+            ></v-text-field>
+            <v-select
+              v-model="couponType"
+              prepend-inner-icon="mdi-ticket-percent"
+              label="Tipo de cupom"
+              :items="items"
+            ></v-select>
+            <v-text-field
+            v-model=couponPrice
+            label="Preço do cupom"
+            prepend-inner-icon="mdi-currency-usd"
+            variant="outlined"
+            type="number"
+            ></v-text-field>
+          <v-btn
+            size="large"
+            rounded="pill"
+            color="primary"
+            append-icon="mdi-chevron-right"
+            @click="adicionaCupom()">
+            Adicionar Cupom
+          </v-btn>
+          <v-btn
+            class="my-2 botao"
+            size="large"
+            rounded="pill"
+            color="primary"
+            variant="outlined"
+            @click="couponDialog=false">
+            Cancelar
+          </v-btn>
+        </v-form>
+      </v-col>
+    </v-row>
+      </v-card>
+    </v-dialog>
   </div>
   </v-app-bar>
 </template>
 
 <script>
 import { shoppingCartStore } from '../stores/cartStore'
+import api from '~api'
 export default {
   setup() {
     const store = shoppingCartStore()
@@ -119,6 +171,14 @@ export default {
       description: '',
       image: '',
       price: '',
+      couponDialog: false,
+      couponName: '',
+      couponType: '',
+      couponPrice: '',
+      items: [
+        { title: 'Absoluto', value: 'AB' },
+        { title: 'Porcentagem', value: 'PC' }
+      ]
       // atualizaContador: false,
     }
   },
@@ -179,6 +239,19 @@ export default {
     goShopping(){
       // this.atualizaContador = !this.atualizaContador
       this.$router.push({ name: "tasks-shopping-list" })
+    },
+    async adicionaCupom() {
+      console.log("alo")
+      console.log(this.couponName, this.couponType, this.couponPrice, typeof(this.couponPrice))
+      api.addNewCoupon(
+        this.couponName,
+        this.couponType,
+        parseInt(this.couponPrice),
+      )
+      this.couponName=''
+      this.couponType=''
+      this.couponPrice=''
+      this.couponDialog = false
     }
   },
   created(){

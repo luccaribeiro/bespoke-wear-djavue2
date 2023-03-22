@@ -21,4 +21,5 @@ urlpatterns = [
     # path('explorer/', include('explorer.urls')),
     path("api/produtos/", include("djavue.base.urls")),
     path("api/accounts/", include("djavue.accounts.urls")),
+    path("api/coupons/", include("djavue.base.urls")),
 ]
