@@ -10,7 +10,7 @@
           <v-card-title class="text-center">
             {{ product.name }}
             <br />
-            <span class="font-weight-bold">{{ product.price }}</span>
+            <span class="font-weight-bold">R$ {{ product.price }}</span>
           </v-card-title>
           <v-card-text class="d-flex justify-center">{{ product.description }}</v-card-text>
           <v-card-actions class="d-flex justify-center">

@@ -19,7 +19,7 @@
       </v-col>
     </v-row>
     <br>
-    <h2 v-if="products.length>0">Total: {{total.toFixed(2)}}</h2>
+    <h2 v-if="products.length>0">Total: R$ {{total.toFixed(2)}}</h2>
     <v-btn @click="dialog = true" v-if="products.length>0" color="primary">Comprar</v-btn>
     <h2 v-else>Carrinho vazio</h2>
      <v-dialog
