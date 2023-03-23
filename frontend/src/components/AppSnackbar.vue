@@ -5,6 +5,7 @@
     multi-line
     location="center"
     elevation="12"
+    :timeout="2000"
     content-class="snackbar-ft-size">
     {{ snackbarMessage }}
   </v-snackbar>

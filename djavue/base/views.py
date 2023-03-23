@@ -4,7 +4,7 @@ from ..commons.django_views_utils import ajax_login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
-from .models import Product, ShoppingCart
+from .models import Product, ShoppingCart, Coupon
 from django.http import HttpResponse
 
 
@@ -73,3 +73,23 @@ def create_product(request):
 # def list_todos(request):
 #     todos = todo_svc.list_todos()
 #     return JsonResponse({"todos": todos})
+
+@ajax_login_required
+@csrf_exempt
+def create_coupon(request):
+    coupon = Coupon(
+        name = request.POST.get("coupon_name"),
+        kind_of_discount = request.POST.get("type"),
+        discount_value = request.POST.get("price"),
+    )
+    coupon.save()
+    return HttpResponse(coupon)
+
+@ajax_login_required
+@csrf_exempt
+def apply_coupon(request):
+    name = request.POST.get("coupon_name")
+    coupon = Coupon.objects.filter(name=name).first()
+    if coupon == None:
+        return JsonResponse({})
+    return JsonResponse(coupon.to_dict_json())

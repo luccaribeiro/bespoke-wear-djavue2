@@ -9,7 +9,7 @@
           <v-card-title class="text-center">
             {{ product[0][0].name }}
             <br />
-            <span class="font-weight-bold">{{ product[0][0].price }}</span>
+            <span class="font-weight-bold">R$ {{ product[0][0].price }}</span>
           </v-card-title>
           <v-card-text  class="d-flex justify-center">{{ product[0][0].description }}</v-card-text>
           <v-card-actions class="d-flex justify-center">
@@ -19,7 +19,7 @@
       </v-col>
     </v-row>
     <br>
-    <h2 v-if="products.length>0">Total: {{total.toFixed(2)}}</h2>
+    <h2 v-if="products.length>0">Total: R$ {{total.toFixed(2)}}</h2>
     <v-btn @click="dialog = true" v-if="products.length>0" color="primary">Comprar</v-btn>
     <h2 v-else>Carrinho vazio</h2>
      <v-dialog
@@ -31,7 +31,7 @@
         <v-row align="center" class="mt-10" no-gutters>
       <v-col cols="12" sm="6" offset-sm="3">
         <v-sheet class="pa-2"><h1>Comprar</h1></v-sheet>
-        <h3>O valor a ser pago é: {{total.toFixed(2)}}</h3>
+        <h3>O valor a ser pago é: R$ {{total.toFixed(2)}}</h3>
         <br>
         <v-form class="form">
           <v-text-field
@@ -62,7 +62,21 @@
             prepend-inner-icon="mdi-currency-usd"
             variant="outlined"
             ></v-text-field>
+            <v-text-field
+            v-model="couponName"
+            label="Cupon de desconto"
+            prepend-inner-icon="mdi-ticket-percent"
+            variant="outlined"
+            ></v-text-field>
+            <v-btn
+            size="large"
+            rounded="pill"
+            color="primary"
+            @click="applyCoupon()"
+            >
+            Validar Cupom
 
+            </v-btn>
 
 
           <v-btn
@@ -94,6 +108,7 @@
 <script>
 import { useAppStore } from "@/stores/appStore"
 import { shoppingCartStore } from '@/stores/cartStore'
+import api from '~api'
 export default {
       setup() {
     const appStore = useAppStore()
@@ -107,6 +122,8 @@ export default {
       products_id: [],
       total: 0,
       dialog: false,
+      couponName: '',
+      usedCoupons: []
     }
   },
   methods: {
@@ -180,6 +197,39 @@ export default {
         await this.appStore.showSnackbar("Compra Concluida ")
         this.cartStore.getItemsQuantity()
       },
+      applyCoupon() {
+      api.applyCoupon(this.couponName)
+      .then(response => {
+        console.log(response, "AQUI")
+        if (this.usedCoupons.includes(response.name)) {
+          this.appStore.showSnackbar("Este cupom já foi aplicado.")
+        } else {
+            if (response.kind_of_discount == 'PC') {
+            this.usedCoupons.push(response.name)
+            // this.total = this.total*(1-response.discount_value/100)
+            if (this.total*(1-response.discount_value/100) <= 0) {
+              this.total = 0
+            } else {
+              this.total = this.total*(1-response.discount_value/100)
+            }
+            this.appStore.showSnackbar("Cupom aplicado com sucesso!")
+            console.log(this.usedCoupons)
+          } else if (response.kind_of_discount == 'AB') {
+            this.usedCoupons.push(response.name)
+            // this.total = this.total - response.discount_value
+            if (this.total - response.discount_value <= 0) {
+              this.total = 0
+            } else {
+              this.total = this.total - response.discount_value
+            }
+            this.appStore.showSnackbar("Cupom aplicado com sucesso!")
+          }
+          else {
+            this.appStore.showSnackbar("Esse cupom não existe!")
+          }
+        }
+      })
+    }
   },
   
   created(){
